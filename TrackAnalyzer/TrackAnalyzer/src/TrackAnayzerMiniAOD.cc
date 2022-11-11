@@ -2,21 +2,11 @@
    Package:    TrackAnayzerMiniAOD
    Class:      TrackAnayzerMiniAOD
 
-   Description: make rootuple of DiMuon-DiTrack combination
+   Description: Basing Track Analyzers for miniAODs with covariance matrix stored
 
    Original Author: Adriano Di Florio
 
 */
-
-// Gen Particles
-// 0 : an empty entry with no meaningful information and therefore to be skipped unconditionally
-// 1 : a final-state particle, i.e. a particle that is not decayed further by the generator
-// 2 : decayed Standard Model hadron or tau or mu lepton, excepting virtual intermediate states thereof (i.e. the particle must undergo a normal decay, not e.g. a shower branching).
-// 3 : a documentation entry
-// 4 : an incoming beam particle
-// 5-10 : undefined, reserved for future standards
-// 11-200: an intermediate (decayed/branched/...) particle that does not fulfill the criteria of status code 2, with a generator-dependent classification of its nature.
-// 201- : at the disposal of the user, in particular for event tracking in the detector
 
 // system include files
 #include <memory>

@@ -73,5 +73,5 @@ process.options.numberOfThreads=cms.untracked.uint32(par.T)
 process.options.numberOfStreams=cms.untracked.uint32(par.T)
 process.options.numberOfConcurrentLuminosityBlocks = 1
 
-process.p = cms.Path(process.patAODTrackCandsUnfiltered+process.patTrackCands+process.TrackAnalyzer)
+process.p = cms.Path(process.TrackAnalyzer)
 process.schedule = cms.Schedule([process.p])

@@ -5,8 +5,10 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 
 par = VarParsing ('analysis')
 
+samplefile = "/store/data/Run2018D/Charmonium/AOD/12Nov2019_UL2018-v1/280003/F6E94749-EEF3-B349-8D56-2EC1E585B9EC.root"
+
 par.register ('f',
-                                  "file",
+                                  samplefile,
                                   VarParsing.multiplicity.list,
                                   VarParsing.varType.string,
                                   "file")

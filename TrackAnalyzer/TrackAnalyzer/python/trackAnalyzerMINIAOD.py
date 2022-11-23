@@ -1,7 +1,10 @@
 import FWCore.ParameterSet.Config as cms
-process = cms.Process('trackAnalyzerMiniAOD')
+process = cms.Process('2mu2k')
 
 from FWCore.ParameterSet.VarParsing import VarParsing
+
+import sys
+sys.path.append("mclists/")
 
 par = VarParsing ('analysis')
 
@@ -33,7 +36,8 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 # process.load("SimTracker.TrackerHitAssociation.tpClusterProducer_cfi")
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '112X_mcRun3_2021_realistic_v7', '')
+#process.GlobalTag = GlobalTag(process.GlobalTag, '112X_mcRun3_2021_realistic_v7', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '106X_dataRun2_v35','')
 
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True))
 

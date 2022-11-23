@@ -2,8 +2,6 @@
    Package:    TrackAnayzerMiniAOD
    Class:      TrackAnayzerMiniAOD
 
-   Description: Basing Track Analyzers for miniAODs with covariance matrix stored
-
    Original Author: Adriano Di Florio
 
 */
@@ -14,6 +12,8 @@
 // user include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
+
+#include "DataFormats/VertexReco/interface/VertexFwd.h"
 
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
@@ -199,7 +199,7 @@ void TrackAnayzerMiniAOD::analyze(const edm::Event& iEvent, const edm::EventSetu
   edm::Handle<edm::View<pat::PackedCandidate> > track;
   iEvent.getByToken(TrackCollection_,track);
 
-  edm::Handle<std::vector<reco::Vertex >> primaryVertices_handle;
+  edm::Handle<reco::VertexCollection> primaryVertices_handle;
   iEvent.getByToken(thePVs_, primaryVertices_handle);
 
   numPrimaryVertices = primaryVertices_handle->size();
@@ -222,16 +222,18 @@ void TrackAnayzerMiniAOD::analyze(const edm::Event& iEvent, const edm::EventSetu
     for (unsigned int i=0; i< track->size(); i++)
     {
 
-      // std::cout << "Event: " << run << " - "
-      //                         << event << " - "
-      //                         << lumi << " - "
-      //           << "N Tracks: " << numTracks << std::endl;
 
       pat::PackedCandidate cand = track->at(i);
+      auto thisVertex = cand.vertexRef();
+
+      reco::VertexRef vtx(primaryVertices_handle, thisVertex.key());
+
+      //std::cout << thisVertex->x() << " - " << thisVertex->y() << " - " << thisVertex->z() << std::endl;
+      //std::cout << vtx->x() << " - " << vtx->y() << " - " << vtx->z() << std::endl;
 
       if (cand.pt() < 0.6) continue;
       if (!cand.hasTrackDetails()) continue;
-      
+
       theTrack_NPixelHits  = -1;
       theTrack_NStripHits  = -1;
       theTrack_NTrackhits  = -1;
@@ -282,7 +284,7 @@ void TrackAnayzerMiniAOD::analyze(const edm::Event& iEvent, const edm::EventSetu
       theTrack_NPixLayers  = cand.pseudoTrack().hitPattern().pixelLayersWithMeasurement();
       theTrack_NTraLayers  = cand.pseudoTrack().hitPattern().trackerLayersWithMeasurement();
       theTrack_NStrLayers  = cand.pseudoTrack().hitPattern().stripLayersWithMeasurement();
-      theTrack_NBPixLayers = cand.pseudoTrack().hitPattern().pixelBarrelLayersWithMeasurement(); 
+      theTrack_NBPixLayers = cand.pseudoTrack().hitPattern().pixelBarrelLayersWithMeasurement();
 
 
       track_tree->Fill();
